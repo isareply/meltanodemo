@@ -1,0 +1,65 @@
+version: 1
+default_environment: dev
+project_id: 4f3dbc97-ebb6-4272-acdd-c9d2724ceed8
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-s3-csv
+    namespace: tap_s3_csv
+    pip_url: pipelinewise-tap-s3-csv
+    executable: tap-s3-csv
+    capabilities:
+    - properties
+    - discover
+    - state
+    settings:
+    - name: aws_access_key_id
+      kind: password
+    - name: aws_secret_access_key
+      kind: password
+    config:
+      bucket: meltanodemo
+      tables:
+      - table_name: test
+        search_pattern: \.csv    #to download all file with extension csv
+      start_date: 2023-06-20T00:00:00Z
+      aws_access_key_id: ${TAP_S3_CSV_AWS_ACCESS_KEY_ID}
+      aws_secret_access_key: ${TAP_S3_CSV_AWS_SECRET_ACCESS_KEY}
+  # - name: tap-spreadsheets-anywhere
+  #   namespace: tap_spreadsheets_anywhere
+  #   pip_url: tap-spreadsheets-anywhere
+  #   executable: tap-spreadsheets-anywhere
+  #   capabilities:
+  #   - properties
+  #   - discover
+  #   - state
+  #   settings:
+  #   - name: aws_access_key_id
+  #     kind: password
+  #   - name: aws_secret_access_key
+  #     kind: password
+  #   config:
+  #     #bucket: meltanodemo 
+  #     tables:
+  #     - path: s3://meltanodemo
+  #       name: test
+  #       pattern: \.csv    #per scaricare tutti i file con estensione csv
+  #       format: csv
+  #       start_date: 2023-06-20T00:00:00Z
+  #     aws_access_key_id: ${TAP_SPREADSHEETS_ANYWHERE_AWS_ACCESS_KEY_ID}
+  #     aws_secret_access_key: ${TAP_SPREADSHEETS_ANYWHERE_AWS_SECRET_ACCESS_KEY}
+
+  loaders:
+  # - name: target-jsonl
+  #   variant: andyh1203
+  #   pip_url: target-jsonl
+  #   config:
+  #     destination_path: C:\\Users\\i.dario\\Desktop\\python_projects\\demo_project\\cdc_output
+  - name: target-csv
+    variant: hotgluexyz
+    pip_url: git+https://github.com/hotgluexyz/target-csv.git
+    config:
+      destination_path: C:\\Users\\i.dario\\Desktop\\python_projects\\demo_project\\cdc_output
