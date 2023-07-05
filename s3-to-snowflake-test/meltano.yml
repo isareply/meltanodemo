@@ -24,7 +24,7 @@ plugins:
       bucket: meltanodemo
       tables:
       - table_name: test
-        search_pattern: \.csv    #to download all file with extension csv
+        search_pattern: \.csv    
       start_date: 2023-06-20T00:00:00Z
       aws_access_key_id: ${TAP_S3_CSV_AWS_ACCESS_KEY_ID}
       aws_secret_access_key: ${TAP_S3_CSV_AWS_SECRET_ACCESS_KEY}
